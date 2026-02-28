@@ -18,12 +18,8 @@ export const createMatchSchema = z.object({
   sport: z.string().min(1),
   homeTeam: z.string().min(1),
   awayTeam: z.string().min(1),
-  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid ISO date string',
-  }),
-  endTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid ISO date string',
-  }),
+  startTime: z.string().datetime({ message: 'Invalid ISO 8601 date string' }),
+  endTime: z.string().datetime({ message: 'Invalid ISO 8601 date string' }),
   homeScore: z.coerce.number().int().nonnegative().optional(),
   awayScore: z.coerce.number().int().nonnegative().optional(),
 }).superRefine((data, ctx) => {
