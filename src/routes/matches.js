@@ -38,6 +38,11 @@ matchRouter.post('/',async(req,res)=>{
             awayScore:awayScore??0,
             status: getMatchStatus(startTime,endTime)
         }).returning()
+        console.log('the actual event',event)
+
+        if(req.app.locals.broadCastMatchCreated) {
+            req.app.locals.broadCastMatchCreated(event)
+        }
         return res.status(201).json({data:event})
     }catch(err){
         console.error(err)
