@@ -19,8 +19,9 @@ app.get('/', (req, res) => {
 });
 app.use('/matches', matchRouter);
 
-const {broadCastMatchCreated} = attachWebSocketServer(server);
-app.locals.broadCastMatchCreated = broadCastMatchCreated;
+
+const {broadcastMatchCreated} = attachWebSocketServer(server);
+app.locals.broadCastMatchCreated = broadcastMatchCreated;
 
 // Start Server
 server.listen(PORT, HOST, () => {

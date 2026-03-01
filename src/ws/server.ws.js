@@ -21,7 +21,6 @@ export function attachWebSocketServer(server) {
     });
 
     wss.on("connection", async (socket, req) => {
-        console.log('requst comming')
         if (wsArcjet) {
             try {
                 const decision = await wsArcjet.protect(req);
@@ -53,7 +52,6 @@ export function attachWebSocketServer(server) {
                     const decision = await wsArcjet.protect(req);
                     if (decision.isDenied()) {
                         socket.close(1008, "rate limit exceeded");
-
                     }
                 } catch (err) {
                     console.log("WS Arcjet message error", err);

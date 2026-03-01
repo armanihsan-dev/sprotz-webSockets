@@ -6,40 +6,36 @@ const arcjetMode = process.env.ARCJET_MODE === 'DRY-RUN' ? 'DRY_RUN' : 'LIVE';
 if (!arcjetKey) {
     throw new Error('ARCJET_KEY is not defined');
 }
-export const httpArcjet = arcjetKey
-    ? arcjet({
-        key: arcjetKey,
-        rules: [
-            shield({mode: arcjetMode}),
-            detectBot({
-                mode: arcjetMode,
-                allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW'],
-            }),
-            slidingWindow({
-                mode: arcjetMode,
-                interval: '1m',
-                max: 40,
-            }),
-        ],
-    })
-    : null;
-export const wsArcjet = arcjetKey
-    ? arcjet({
-        key: arcjetKey,
-        rules: [
-            shield({mode: arcjetMode}),
-            detectBot({
-                mode: arcjetMode,
-                allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW'],
-            }),
-            slidingWindow({
-                mode: arcjetMode,
-                interval: '10s',
-                max: 1,
-            }),
-        ],
-    })
-    : null;
+export const httpArcjet = arcjet({
+    key: arcjetKey,
+    rules: [
+        shield({mode: arcjetMode}),
+        detectBot({
+            mode: arcjetMode,
+            allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW'],
+        }),
+        slidingWindow({
+            mode: arcjetMode,
+            interval: '1m',
+            max: 40,
+        }),
+    ],
+})
+export const wsArcjet = arcjet({
+    key: arcjetKey,
+    rules: [
+        shield({mode: arcjetMode}),
+        detectBot({
+            mode: arcjetMode,
+            allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW'],
+        }),
+        slidingWindow({
+            mode: arcjetMode,
+            interval: '10s',
+            max: 100,
+        }),
+    ],
+})
 
 export function securityMiddleware() {
     return async (req, res, next) => {
